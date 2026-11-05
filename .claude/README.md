@@ -20,7 +20,6 @@ This directory is the project's primary operating handbook. The root [AGENTS.md]
 │   └── tdd.md
 ├── hooks/
 │   ├── markdown-check.sh
-│   ├── mempalace-reminder.sh
 │   ├── no-commit-attribution.sh
 │   ├── no-tracking-refs.sh
 │   ├── rustdoc-width-check.sh
@@ -52,7 +51,7 @@ This directory is the project's primary operating handbook. The root [AGENTS.md]
 
 - **Skills** (`commands/`) are the slash commands `/brief`, `/gate`, `/matrix`, `/review-code`, `/review-spec`, and `/tdd`; each loads the relevant `rules/`, `workflows/`, `reviewers/`, or `templates/` file before acting.
 - **Subagents** (`agents/`) — `code-reviewer` and `spec-reviewer` — apply the corresponding `reviewers/` lens to a diff and never modify code themselves.
-- **Hooks** (`hooks/`, wired in `settings.json`) run automatically after every `Edit`/`Write`: `rustfmt-check.sh` reports Rust formatting drift, `rustdoc-width-check.sh` reports Rustdoc lines over 120 characters, `markdown-check.sh` reports trailing whitespace, and `no-tracking-refs.sh` reports an `R-*`/`D-*`/`Q-*`/`VD-*`/"phase N" tracking-identifier reference in code or docs.`no-commit-attribution.sh` blocks a `git commit`/`gh pr create` carrying attribution text before it runs; `mempalace-reminder.sh` prompts for a session summary in mempalace when the session ends without one.
+- **Hooks** (`hooks/`, wired in `settings.json`) run automatically after every `Edit`/`Write`: `rustfmt-check.sh` reports Rust formatting drift, `rustdoc-width-check.sh` reports Rustdoc lines over 120 characters, `markdown-check.sh` reports trailing whitespace, and `no-tracking-refs.sh` reports an `R-*`/`D-*`/`Q-*`/`VD-*`/"phase N" tracking-identifier reference in code or docs.`no-commit-attribution.sh` blocks a `git commit`/`gh pr create` carrying attribution text before it runs.
 - **`scripts/check.sh`** is the completion gate: guidance checks (required files, trailing whitespace, local Markdown links, shellcheck) followed by `just ci` once the Cargo workspace builds.
 
 ## Session entry point

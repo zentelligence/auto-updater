@@ -25,4 +25,4 @@ licences-check:
 
 ci: fmt clippy test audit licences-check
     shellcheck .claude/scripts/check.sh .claude/hooks/rustfmt-check.sh .claude/hooks/markdown-check.sh \
-      .claude/hooks/no-commit-attribution.sh .claude/hooks/mempalace-reminder.sh
+      .claude/hooks/no-commit-attribution.sh

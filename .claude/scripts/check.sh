@@ -50,7 +50,7 @@ for markdown_file in "${markdown_files[@]}"; do
     link_target="${link_target%%#*}"
 
     case "${link_target}" in
-      ''|'#'*|http:*|https:*|mailto:*|psyphi:*) continue ;;
+      ''|'#'*|http:*|https:*|mailto:*) continue ;;
     esac
 
     link_target="${link_target#<}"
@@ -71,8 +71,7 @@ if ! command -v shellcheck >/dev/null 2>&1; then
 fi
 
 shellcheck .claude/scripts/check.sh .claude/hooks/rustfmt-check.sh .claude/hooks/rustdoc-width-check.sh \
-  .claude/hooks/markdown-check.sh .claude/hooks/no-commit-attribution.sh .claude/hooks/no-tracking-refs.sh \
-  .claude/hooks/mempalace-reminder.sh
+  .claude/hooks/markdown-check.sh .claude/hooks/no-commit-attribution.sh .claude/hooks/no-tracking-refs.sh
 
 if [[ ! -f Cargo.toml ]]; then
   printf 'Guidance checks passed. Cargo workspace not yet present; Rust checks skipped.\n'

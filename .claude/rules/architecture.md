@@ -6,7 +6,7 @@ The workspace is a one-way dependency graph, not a hexagon with a single composi
 
 - `updater-core` owns manifest and release metadata types, local state, validated/confined path types, error types, and the atomic-write and activation-port traits. It depends on nothing else in this workspace, and only on dependencies pulled in for pure domain modelling (see `rust-quality.md`).
 - `updater-launcher` and `updater-engine` depend on `updater-core` only. Neither depends on the other, and neither depends on `updater-cli`.
-- `updater-cli` is the composition point: it depends on `updater-core`, `updater-launcher`, and `updater-engine`, translates CLI arguments into domain calls, and translates results back into operator-facing output and exit codes. 
+- `updater-cli` is the composition point: it depends on `updater-core`, `updater-launcher`, and `updater-engine`, translates CLI arguments into domain calls, and translates results back into operator-facing output and exit codes.
 - Keep OS- and transport-specific types out of domain function signatures. Convert at the boundary with `From` or `TryFrom` and validate before calling into `updater-core` types. Do not hide that translation in free-form helper functions.
 
 ## The write pipeline
