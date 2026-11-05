@@ -1,0 +1,27 @@
+[package]
+name = "updater-engine"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[dependencies]
+ed25519-dalek = "3.0.0"
+flate2 = "1.1.10"
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.151"
+sha2 = "0.11.0"
+tar = "0.4.46"
+thiserror = "2.0.20"
+time = { version = "0.3.55", features = ["formatting", "parsing"] }
+updater-core = { path = "../updater-core" }
+ureq = "3.4.2"
+zip = { version = "9.0.5", default-features = false, features = ["deflate", "time"] }
+
+[dev-dependencies]
+tempfile = "3.27.0"

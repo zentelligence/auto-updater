@@ -1,0 +1,21 @@
+[package]
+name = "updater-keytool"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[[bin]]
+name = "updater-keytool"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4.6.7", features = ["derive"] }
+ed25519-dalek = "3.0.0"
+getrandom = "0.4.3"
+thiserror = "2.0.20"
