@@ -1,6 +1,6 @@
 //! The update transaction: manifest retrieval and signature verification, download, checksum
 //! verification, archive extraction, bundle and executable validation, promotion, pointer
-//! activation, rollback, cleanup, state management, and the update lock.
+//! activation, rollback, cleanup, state management, stable launchers, and the update lock.
 
 mod activation;
 mod archive;
@@ -17,6 +17,7 @@ mod promotion;
 mod rollback;
 mod signature;
 mod signature_envelope;
+mod stable_launchers;
 mod state_management;
 mod target_detection;
 mod transaction;
@@ -40,6 +41,7 @@ pub use promotion::promote_release;
 pub use rollback::rollback;
 pub use signature::{Ed25519ManifestVerifier, ManifestVerifier, TrustedKey};
 pub use signature_envelope::SignatureEnvelope;
+pub use stable_launchers::{LauncherRemoval, PathChange, StableLaunchers};
 pub use state_management::{read_state, write_state};
 pub use target_detection::detect_target;
 pub use transaction::{CheckOutcome, InstallCollaborators, UpdateContext, check_for_update, install_update};
