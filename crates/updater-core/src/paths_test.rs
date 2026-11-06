@@ -1,10 +1,13 @@
 use super::*;
 
+/// An absolute path on the host running the test, which is what an installation root must be.
+const ROOT: &str = if cfg!(windows) { "C:\\opt\\tool" } else { "/opt/tool" };
+
 #[test]
 fn installation_root_accepts_an_absolute_path() {
-    let root = InstallationRoot::try_from(PathBuf::from("/home/user/.local/share/tool")).unwrap();
+    let root = InstallationRoot::try_from(PathBuf::from(ROOT)).unwrap();
 
-    assert_eq!(root.as_path(), Path::new("/home/user/.local/share/tool"));
+    assert_eq!(root.as_path(), Path::new(ROOT));
 }
 
 #[test]
@@ -58,12 +61,12 @@ fn confined_path_normalises_current_directory_components() {
 
 #[test]
 fn resolve_within_joins_onto_the_installation_root() {
-    let root = InstallationRoot::try_from(PathBuf::from("/opt/tool")).unwrap();
+    let root = InstallationRoot::try_from(PathBuf::from(ROOT)).unwrap();
     let path = ConfinedRelativePath::try_from("versions/1.10.0/bin/tool").unwrap();
 
     let resolved = path.resolve_within(root.as_path()).unwrap();
 
-    assert_eq!(resolved, Path::new("/opt/tool/versions/1.10.0/bin/tool"));
+    assert_eq!(resolved, Path::new(ROOT).join("versions/1.10.0/bin/tool"));
 }
 
 #[test]

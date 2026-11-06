@@ -80,7 +80,8 @@ impl TryFrom<PathBuf> for ConfinedRelativePath {
         if value.as_os_str().is_empty() {
             return Err(CoreError::PathEmpty { value });
         }
-        if value.is_absolute() {
+        // A path from the root of the drive, like `/etc`, is not absolute on Windows, but it is no more relative.
+        if value.is_absolute() || value.has_root() {
             return Err(CoreError::PathNotRelative { value });
         }
 

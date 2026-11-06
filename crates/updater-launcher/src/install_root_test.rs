@@ -3,6 +3,13 @@ use std::path::Path;
 
 use super::*;
 
+/// An absolute path on the host running the test, which is what an installation root must be.
+const CUSTOM_ROOT: &str = if cfg!(windows) {
+    "C:\\custom\\path"
+} else {
+    "/custom/path"
+};
+
 struct FakeEnvironment(HashMap<String, String>);
 
 impl EnvironmentLookup for FakeEnvironment {
@@ -17,20 +24,20 @@ fn fake_env(pairs: &[(&str, &str)]) -> FakeEnvironment {
 
 #[test]
 fn override_variable_takes_precedence() {
-    let env = fake_env(&[("TOOL_INSTALL_ROOT", "/custom/path")]);
+    let env = fake_env(&[("TOOL_INSTALL_ROOT", CUSTOM_ROOT)]);
 
     let root = resolve_installation_root(&env, "tool", "tool").unwrap();
 
-    assert_eq!(root.as_path(), Path::new("/custom/path"));
+    assert_eq!(root.as_path(), Path::new(CUSTOM_ROOT));
 }
 
 #[test]
 fn override_variable_name_is_upper_cased() {
-    let env = fake_env(&[("TOOL_INSTALL_ROOT", "/custom/path")]);
+    let env = fake_env(&[("TOOL_INSTALL_ROOT", CUSTOM_ROOT)]);
 
     let root = resolve_installation_root(&env, "tool", "tool").unwrap();
 
-    assert_eq!(root.as_path(), Path::new("/custom/path"));
+    assert_eq!(root.as_path(), Path::new(CUSTOM_ROOT));
 }
 
 #[test]
