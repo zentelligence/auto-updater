@@ -4,6 +4,9 @@ use updater_launcher::EnvironmentLookup;
 
 use super::*;
 
+/// An absolute path on the host running the test, which is what an installation root must be.
+const INSTALL_ROOT: &str = if cfg!(windows) { "C:\\opt\\tool" } else { "/opt/tool" };
+
 struct FakeEnv(HashMap<String, String>);
 
 impl EnvironmentLookup for FakeEnv {
@@ -23,7 +26,7 @@ fn fake_env(pairs: &[(&str, &str)]) -> FakeEnv {
 fn minimal_valid_pairs(key_hex: &str) -> Vec<(&'static str, String)> {
     vec![
         ("UPDATER_PRODUCT", "tool".to_string()),
-        ("TOOL_INSTALL_ROOT", "/opt/tool".to_string()),
+        ("TOOL_INSTALL_ROOT", INSTALL_ROOT.to_string()),
         ("TOOL_UPDATE_URL", "https://example.com/latest.json".to_string()),
         ("TOOL_TRUSTED_KEYS", format!("primary:{key_hex}")),
     ]
@@ -55,7 +58,7 @@ fn rejects_a_missing_product_name() {
 
 #[test]
 fn rejects_a_missing_manifest_url() {
-    let env = fake_env(&[("UPDATER_PRODUCT", "tool"), ("TOOL_INSTALL_ROOT", "/opt/tool")]);
+    let env = fake_env(&[("UPDATER_PRODUCT", "tool"), ("TOOL_INSTALL_ROOT", INSTALL_ROOT)]);
 
     let error = load(&env).unwrap_err();
 
@@ -66,7 +69,7 @@ fn rejects_a_missing_manifest_url() {
 fn rejects_a_missing_trusted_keys_configuration() {
     let env = fake_env(&[
         ("UPDATER_PRODUCT", "tool"),
-        ("TOOL_INSTALL_ROOT", "/opt/tool"),
+        ("TOOL_INSTALL_ROOT", INSTALL_ROOT),
         ("TOOL_UPDATE_URL", "https://example.com/latest.json"),
     ]);
 
@@ -79,7 +82,7 @@ fn rejects_a_missing_trusted_keys_configuration() {
 fn rejects_a_malformed_trusted_key_entry() {
     let env = fake_env(&[
         ("UPDATER_PRODUCT", "tool"),
-        ("TOOL_INSTALL_ROOT", "/opt/tool"),
+        ("TOOL_INSTALL_ROOT", INSTALL_ROOT),
         ("TOOL_UPDATE_URL", "https://example.com/latest.json"),
         ("TOOL_TRUSTED_KEYS", "not-a-valid-entry"),
     ]);
@@ -94,7 +97,7 @@ fn parses_multiple_trusted_keys_for_key_rotation() {
     let key_hex = valid_public_key_hex();
     let env = fake_env(&[
         ("UPDATER_PRODUCT", "tool"),
-        ("TOOL_INSTALL_ROOT", "/opt/tool"),
+        ("TOOL_INSTALL_ROOT", INSTALL_ROOT),
         ("TOOL_UPDATE_URL", "https://example.com/latest.json"),
         ("TOOL_TRUSTED_KEYS", &format!("primary:{key_hex},secondary:{key_hex}")),
     ]);
@@ -109,7 +112,7 @@ fn parses_declared_public_commands() {
     let key_hex = valid_public_key_hex();
     let env = fake_env(&[
         ("UPDATER_PRODUCT", "tool"),
-        ("TOOL_INSTALL_ROOT", "/opt/tool"),
+        ("TOOL_INSTALL_ROOT", INSTALL_ROOT),
         ("TOOL_UPDATE_URL", "https://example.com/latest.json"),
         ("TOOL_TRUSTED_KEYS", &format!("primary:{key_hex}")),
         ("TOOL_COMMANDS", "tool, tool-agent, tool-worker"),
@@ -128,7 +131,7 @@ fn rejects_a_non_numeric_retain_versions_value() {
     let key_hex = valid_public_key_hex();
     let env = fake_env(&[
         ("UPDATER_PRODUCT", "tool"),
-        ("TOOL_INSTALL_ROOT", "/opt/tool"),
+        ("TOOL_INSTALL_ROOT", INSTALL_ROOT),
         ("TOOL_UPDATE_URL", "https://example.com/latest.json"),
         ("TOOL_TRUSTED_KEYS", &format!("primary:{key_hex}")),
         ("TOOL_RETAIN_VERSIONS", "not-a-number"),
