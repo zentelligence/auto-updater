@@ -4178,7 +4178,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Used by:
 
-- webpki-roots 1.0.9
+- webpki-roots 1.0.11
 
 ```text
 # Community Data License Agreement - Permissive - Version 2.0
@@ -4295,7 +4295,7 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 Used by:
 
-- rustls-webpki 0.103.15
+- rustls-webpki 0.103.16
 
 ```text
 Except as otherwise noted, this project is licensed under the following

@@ -8,7 +8,7 @@ The authoritative specification lives outside this repository. See [`AGENTS.md`]
 
 - `crates/updater-core`: manifest, release, and state types; validated paths; error types; the atomic-write and activation-port traits. No dependency on any other crate in this workspace.
 - `crates/updater-launcher`: resolves the active release set and starts a command's executable from it.
-- `crates/updater-engine`: the update transaction: manifest retrieval, verification, download, extraction, validation, promotion, activation, rollback, cleanup, and locking.
+- `crates/updater-engine`: the update transaction: manifest retrieval, verification, download, extraction, validation, promotion, activation, rollback, cleanup, and locking, and stable launchers: placing them on `PATH`, keeping them current, and removing them.
 - `crates/updater-cli`: the `update`/`rollback`/`install`/`update diagnostics` subcommands, plus a thin `updater` binary for direct use and manual/integration testing.
 - `docs/`: example configuration, man pages, and auto-generated Rustdoc; neither the specification nor the decisions log lives here.
 

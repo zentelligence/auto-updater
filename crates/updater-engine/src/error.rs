@@ -108,6 +108,9 @@ pub enum EngineError {
     #[error("failed to read {path:?} while computing its checksum: {source}")]
     ChecksumIo { path: PathBuf, source: std::io::Error },
 
+    #[error("the launcher ledger at {path:?} is invalid: {reason}")]
+    InvalidLauncherLedger { path: PathBuf, reason: String },
+
     #[error("I/O failure at {path:?}: {source}")]
     Io { path: PathBuf, source: std::io::Error },
 }
